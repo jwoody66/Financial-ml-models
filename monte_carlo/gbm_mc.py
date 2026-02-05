@@ -30,7 +30,7 @@ def simulate_gbm_paths(S0: float, mu: float, sigma: float, n_days: int, n_sims: 
     # Z ~ N(0,1) shocks
     Z = rng.standard_normal(size=(n_days, n_sims))
 
-    # Discrete-time GBM log returns look into GBM monte carlo and see why this works
+    # Discrete-time GBM log returns
     # r_t = (mu - 0.5*sigma^2) + sigma*Z_t
     r = (mu - 0.5 * sigma**2) + sigma * Z  ##This is the model for the MC, sigma* Z adds randomness scaled by volatility.
     # Convert returns into price paths:
@@ -40,7 +40,7 @@ def simulate_gbm_paths(S0: float, mu: float, sigma: float, n_days: int, n_sims: 
     return price_paths
 
 
-def summarize(price_paths: np.ndarray) -> dict:
+def summarize(price_paths: np.ndarray):
     """
     Summary stats for the distribution of final prices.
     """
@@ -54,7 +54,7 @@ def summarize(price_paths: np.ndarray) -> dict:
     }
 
 
-def plot_paths(price_paths: np.ndarray, ticker: str, n_plot: int = 50) -> None:
+def plot_paths(price_paths: np.ndarray, ticker: str, n_plot: int = 50):
     plt.figure()
     plt.plot(price_paths[:, :n_plot])
     plt.title(f"Monte Carlo GBM Paths: {ticker}")
@@ -63,7 +63,7 @@ def plot_paths(price_paths: np.ndarray, ticker: str, n_plot: int = 50) -> None:
     plt.show()
 
 
-def plot_fan_chart(price_paths: np.ndarray, ticker: str) -> None:
+def plot_fan_chart(price_paths: np.ndarray, ticker: str):
     p5 = np.percentile(price_paths, 5, axis=1)
     p50 = np.percentile(price_paths, 50, axis=1)
     p95 = np.percentile(price_paths, 95, axis=1)
